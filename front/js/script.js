@@ -1,33 +1,35 @@
 /******************/ 
-/* Page d'Accueil */
-/*****************/
+/*   Home Page    */
+/******************/
 
 
 
-//Lien API
+//API link
 const api = 'http://localhost:3000/api/products';
 
-//Stockage des valeurs
-let kanapData = '';
 
-
-/** Connexion avec l'API en GET pour reception */
-
+/**
+ * Connection with API with GET for reception
+ * @param {string} api - url of api declared in "const api"
+ * @returns {Promise.resolve<string>} - array of product and detail product
+ * @returns {Promise.reject<Error>} - knex Err or BadRequestError
+ */
 fetch(api)
-    // vérification de la connexion
+
+    // check API connection and return result if it's ok
     .then ((res) => {
         if (res.ok) {
             return res.json();
         }
     })
-    //on récupère les données et on les enregistre dans la variable kanapData
+
+    //work with API result
     .then((value) => {
-        kanapData = value;
 
-        /** On affiche les produits récupéré de l'API sur la page d'accueil */
+        // Display product on home page
+        for (let kanap of value) {
 
-        for (let kanap of kanapData) {
-            //Génération du code HTML
+            //HTML generation
             document
                 .getElementById('items')
                 .innerHTML = `<a href="">
@@ -38,12 +40,12 @@ fetch(api)
                                 </article>
                             </a>`+ document.getElementById('items').innerHTML;                   
 
-            //Lien
+            //Link generation
             document
                 .querySelector('section a')
                 .setAttribute('href', `./product.html?id=${kanap._id}`);
 
-            //Image
+            //Image generation
             document
                 .querySelector('article img')
                 .setAttribute('src', kanap.imageUrl);
@@ -51,23 +53,26 @@ fetch(api)
                 .querySelector('article img')
                 .setAttribute('alt', kanap.altTxt);
 
-            //Nom
+            //Name generation
             document
                 .querySelector('article h3')
                 .innerText = kanap.name;
 
-            //Description
+            //Description generation
             document
                 .querySelector('article p')
                 .innerText = kanap.description;
         };
     })
 
-    // Si erreur on l'affiche dans la console et on affiche un message sur la page d'accueil 
+    // If error, display it on console and display a message on home page
     .catch((err) => {
         console.log(err);
         document
             .getElementById('items')        
-            .innerText = "La connection avec l'API à échoué :( ";
-    });
-    
+            .innerText = "La connection avec l'API à échoué :( "
+    })
+;
+
+
+

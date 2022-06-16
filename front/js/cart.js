@@ -1,22 +1,22 @@
-/******************/ 
-/*  Product Page  */
-/******************/
-
-
-
-//Initialization of URL object with brother's url
-let url = new URL(document.location.href);
-
-
-//Recovery of id from url
-let id = url.searchParams.get("id");
-
-
 //API link with product's id
 const api = 'http://localhost:3000/api/products/' + id;
 
+//Initialization of Basket
+let arrayBasket ={
+    "idProduct" : '',
+    "quantityProduct" : '',
+    "colorProduct": ''
+};
 
-/******************************************************* */
+//Initialisation of client's detail order
+let clientOrder = {
+    "firstName" : '',
+    "lastName": '',
+    "address": '',
+    "city":'',
+    "email": '',
+    "order": ''
+};
 
 
 /**
@@ -79,30 +79,5 @@ const api = 'http://localhost:3000/api/products/' + id;
 .catch((err) => {
     console.log(err);
     alert("la connexion avec l\'API a échoué")
-})
-;
-
-
-/************************************************************ */
-
-
-//Local storage for cart : Quantity
-document
-    .querySelector('#quantity')
-    .addEventListener('input', (e) => {
-        localStorage.quantity = e.target.value;
-    })
-;
-
-
-//Locale storage for basket : Id product
-localStorage.id = id;
-
-
-//Locale storage for cart : Color
-document
-    .querySelector('#colors')
-    .addEventListener('input', (e) => {
-        localStorage.color = e.target.value;
-    })
+ })
 ;

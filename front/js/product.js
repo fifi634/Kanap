@@ -75,36 +75,46 @@ const api = 'http://localhost:3000/api/products/' + id;
 
 
 /************************************************************ */
-/*               STOCKAGE OF CART                             */
+/*               STOCKAGE OF PRODUCT DETAIL                   */
 /************************************************************ */
 
+//Initialisation of object for store product's detail
+let product = {
+    "id": id,
+    "quantity": '',
+    "color" : '',
+};
 
-//Local storage for cart : Quantity
+
+//Set Object product : Quantity
 document
     .querySelector('#quantity')
-    .addEventListener('input', (e) => localStorage.quantity = e.target.value)
+    .addEventListener('input', (e) => product.quantity = e.target.value)
 ;
 
 
-//Locale storage for basket : Id product
-localStorage.id = id;
-
-
-//Locale storage for cart : Color
+//Set Object product : Color
 document
     .querySelector('#colors')
-    .addEventListener('input', (e) => localStorage.color = e.target.value)
+    .addEventListener('input', (e) => product.color = e.target.value)
 ;
-console.log(localStorage);
+
+/**************************************************************/
+/*                     ADD CART BUTTON                        */
+/**************************************************************/
 
 
-/************************************************************* */
-/*                     ADD CART BUTTON                         */
-/************************************************************* */
-
-
-// When it have a click on a button, go to cart's page
+// When it have a click on a button, save in local storage and go to cart's page
 document
     .querySelector('#addToCart')
-    .addEventListener('click', (e) => document.location.href = "http://127.0.0.1:5500/front/html/cart.html")
+    .addEventListener('click', function (){
+        if (product.quantity >= 1 && product.color != '') {
+            addCart(product);
+            document.location.href = "http://127.0.0.1:5500/front/html/cart.html";
+        } else {
+            alert('Veuillez choisir une couleur et une quantité')
+        }
+    })
 ;
+
+let cart = getCart();

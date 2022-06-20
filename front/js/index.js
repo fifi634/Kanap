@@ -26,36 +26,43 @@ fetch(api)
             //HTML generation
             document
                 .getElementById('items')
-                .innerHTML = `<a href="">
-                                <article>
-                                    <img src="" alt="">
-                                    <h3 class="productName"></h3>
-                                    <p class="productDescription"></p>
-                                </article>
-                            </a>`+ document.getElementById('items').innerHTML;                   
+                .innerHTML = 
+                    `<a href="">
+                        <article>
+                            <img src="" alt="">
+                            <h3 class="productName"></h3>
+                            <p class="productDescription"></p>
+                        </article>
+                    </a>`+ document.getElementById('items').innerHTML
+                ;                   
 
             //Link generation
             document
                 .querySelector('section a')
-                .setAttribute('href', `./product.html?id=${kanap._id}`);
+                .setAttribute('href', `./product.html?id=${kanap._id}`)
+            ;
 
             //Image generation
             document
                 .querySelector('article img')
-                .setAttribute('src', kanap.imageUrl);
+                .setAttribute('src', kanap.imageUrl)
+            ;
             document
                 .querySelector('article img')
-                .setAttribute('alt', kanap.altTxt);
+                .setAttribute('alt', kanap.altTxt)
+            ;
 
             //Name generation
             document
                 .querySelector('article h3')
-                .innerText = kanap.name;
+                .innerText = kanap.name
+            ;
 
             //Description generation
             document
                 .querySelector('article p')
-                .innerText = kanap.description;
+                .innerText = kanap.description
+            ;
         };
     })
 
@@ -65,6 +72,7 @@ fetch(api)
         document
             .getElementById('items')        
             .innerText = "La connection avec l'API à échoué :( "
+        ;
     })
 ;
 

@@ -1,75 +1,58 @@
-/******************/ 
-/* Page d'Accueil */
-/*****************/
+/**************************** */
+/*     GLOBAL FUNCTION        */
+/**************************** */
 
 //Recovery of id from url
 // let id = new URL(document.location.href).searchParams.get("id");
 
+/**
+ * Save cart in locale storage
+ * @type {object} - "cart" object : article purchase with color, id and quantity detail
+ */
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
 
-//Lien API
-const api = 'http://localhost:3000/api/products';
 
-//Stockage des valeurs
-let kanapData = '';
+//
+/**
+ * Recovery cart from local storage
+ * @returns {string | array} - If cart exist return empty array else return existing cart from local storage in array format
+ */
+function getCart() {
+    let cart = localStorage.getItem("cart");
+
+    //Create cart if doesn't exist
+    if (cart == null) {
+        return [];
+    } else {
+        return JSON.parse(cart);
+    }
+}
 
 
-/** Connexion avec l'API en GET pour reception */
+/**
+ * Add cart in local strorage
+ * @type {object} - "product" object : article purchase with color, id and quantity detail
+ */
+function addCart(product) {
+    let cart = getCart();
 
-fetch(api)
-    // vérification de la connexion
-    .then ((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-    })
-    //on récupère les données et on les enregistre dans la variable kanapData
-    .then((value) => {
-        kanapData = value;
+    //Add quantity when product exist
+    let foundProduct = cart.find(cart => cart.id == product.id);
 
-        /** On affiche les produits récupéré de l'API sur la page d'accueil */
+    if (foundProduct != undefined) {
+        foundProduct.quantity++;
+    } else {
+        product.quantity = 1;
+        cart.push(product);
+    }   
+    saveCart(cart);
+}
 
-        for (let kanap of kanapData) {
-            //Génération du code HTML
-            document
-                .getElementById('items')
-                .innerHTML = `<a href="">
-                                <article>
-                                    <img src="" alt="">
-                                    <h3 class="productName"></h3>
-                                    <p class="productDescription"></p>
-                                </article>
-                            </a>`+ document.getElementById('items').innerHTML;                   
 
-            //Lien
-            document
-                .querySelector('section a')
-                .setAttribute('href', `./product.html?id=${kanap._id}`);
-
-            //Image
-            document
-                .querySelector('article img')
-                .setAttribute('src', kanap.imageUrl);
-            document
-                .querySelector('article img')
-                .setAttribute('alt', kanap.altTxt);
-
-            //Nom
-            document
-                .querySelector('article h3')
-                .innerText = kanap.name;
-
-            //Description
-            document
-                .querySelector('article p')
-                .innerText = kanap.description;
-        };
-    })
-
-    // Si erreur on l'affiche dans la console et on affiche un message sur la page d'accueil 
-    .catch((err) => {
-        console.log(err);
-        document
-            .getElementById('items')        
-            .innerText = "La connection avec l'API à échoué :( ";
-    });
-    
+function removeFromCart(product) {
+    let cart = getCart();
+    cart = cart.filter(cart => cart.id != product.id);
+    saveCart(cart);
+}

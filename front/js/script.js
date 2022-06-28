@@ -35,24 +35,24 @@ function getCart() {
  * Add cart in local strorage
  * @type {object} - "product" object : article purchase with color, id and quantity detail
  */
-function addCart(product) {
+function addCart(purchase) {
     let cart = getCart();
 
     //Add quantity when product exist
-    let foundProduct = cart.find(cart => cart.id == product.id);
+    let foundProduct = cart.find(cart => cart.id == purchase.id);
 
     if (foundProduct != undefined) {
-        foundProduct.quantity++;
+        foundProduct.quantity += parseInt(purchase.quantity);
     } else {
-        product.quantity = 1;
-        cart.push(product);
+        purchase.quantity = 1;
+        cart.push(purchase);
     }   
     saveCart(cart);
 }
 
 
-function removeFromCart(product) {
+function removeFromCart(purchase) {
     let cart = getCart();
-    cart = cart.filter(cart => cart.id != product.id);
+    cart = cart.filter(cart => cart.id != purchase.id);
     saveCart(cart);
 }

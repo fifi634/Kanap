@@ -75,14 +75,20 @@ const api = 'http://localhost:3000/api/products/' + id;
 
 
 /************************************************************ */
-/*               STOCKAGE OF CART                             */
+/*               STOCKAGE OF PURCHASE                             */
 /************************************************************ */
+//Initialise storage purchase
+let purchase = {
+    "id" : id,
+    "quantity" : '',
+    "color" : '',
+};
 
 
 //Local storage for cart : Quantity
 document
     .querySelector('#quantity')
-    .addEventListener('input', (e) => localStorage.quantity = e.target.value)
+    .addEventListener('input', (e) => purchase.quantity = e.target.value)
 ;
 
 
@@ -93,7 +99,7 @@ localStorage.id = id;
 //Locale storage for cart : Color
 document
     .querySelector('#colors')
-    .addEventListener('input', (e) => localStorage.color = e.target.value)
+    .addEventListener('input', (e) => purchase.color = e.target.value)
 ;
 console.log(localStorage);
 

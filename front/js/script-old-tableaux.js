@@ -8,20 +8,20 @@
  * @param {any} purchase - Object who content article purchase with user detail's choice (color and quantity)
  * @returns {array | undefined} - Cart with purchase article in array format or undifined if purchase wasn't done
  */
- function convertInCartArray(purchase) {
+function convertInCartArray(purchase) {
 
     //start function only if purchase done
-    if (purchase.color != null && purchase.quantity != null) {
+    if (purchase.color != '' && purchase.quantity != '') {
         //generate cart array
         return [
-            productOption = {
-                "id" : purchase.id,
-                "color" : purchase.color,
-                "quantity" : purchase.quantity
-            }
+            productOption = [
+                id = purchase.id,
+                color = purchase.color,
+                quantity = purchase.quantity
+            ] 
         ];
     } else {
-        console.log('convert failed, purchase was not define');
+        console.log('convert failed, purchase was not define')
     }
 }
 
@@ -34,14 +34,13 @@
  */
  function saveCart(cart) {
     //Verify is cart was defined
-    if(cart != undefined && cart.length != 0 ) {
+    if(cart != undefined) {
         localStorage.setItem('cart', JSON.stringify(cart));
     } else {
-        console.log('Product undefined or empty cart, save abort');
+        console.log('Product undefinied, save abort');
     }
     //Update cart from local storage
     cart = JSON.parse(localStorage.getItem('cart'));
-    console.log('save');
     console.log(cart);
 }
 
@@ -58,19 +57,16 @@ function getCart() {
     //If cart doesn't exist, convert purchase in cart array
     if (cart == null && purchase.color != '' && purchase.quantity != '') {
         cart = [];
-        console.log('getCart() null');
+        cart.push(purchase);
         return cart;
     //Else if cart exist return it
-    } else if (cart != null) {
-        console.log('existing cart')
+    } else if (cart!= null) {
         cartReturn = JSON.parse(cart);
         //If cart in an array, return it
         if(Array.isArray(cartReturn) === true) {
-            console.log('getCart() array=true');
             return cartReturn;
         //Else convert it
         } else {
-            console.log('getCart() array=false');
             return convertInCartArray(cartReturn);
         }
     //Else do nothing
@@ -102,34 +98,19 @@ function getCart() {
 function addCart(purchase) {
     //recovery cart
     let cart = getCart();
+    // let foundProduct = searchProduct(purchase);
     console.log(cart);
-    //If cart is empty
-    if (cart.length == 0) {
-        console.log('empty array');
-        cart.push(purchase);
-    } else {       
-        //For each product of cart
-        for (let kanap in cart) {
-            //If a same id and color with purchase
-            if  (kanap.id === purchase.id && kanap.color === purchase.color) {
-                // kanap.quantity = kanap.quantity + purchase.quantité  
-                let sum = parseInt(kanap.quantity) + parseInt(purchase.quantity);
-                console.log('kanap.quantity :');
-                console.log(kanap.quantity);
-                console.log('purchase.quantity');
-                console.log(purchase.quantity);           
-                
-                //Add quantity of this product in cart               
-                kanap.quantity = parseInt(sum);
-                console.log('SUM = ');
-                console.log(sum);                
-            //Else add purchase at cart array
-            } else if (kanap.id != purchase.id || kanap.color != purchase.color) {
-                cart.push(purchase);
-            }    
-        console.log('addCart');
-        console.log(cart);
+    //For each product of cart
+    for (let kanap of cart) {
+        //If a same id and color with purchase
+        if (kanap[1] == purchase.id && kanap[0] == purchase.color) {
+            //Add quantity of this product in cart
+            kanap[2] = parseInt(kanap[2]) + parseInt(purchase.quantity);
+        //Else add purchase at cart array
+        } if(kanap[1] != purchase.id || kanap[0] != purchase.color) {
+            cart.push(purchase);
         }
+        
     }
 
     // //If product was found and it have a same color

@@ -47,8 +47,7 @@ const api = "http://localhost:3000/api/products/" + id;
         title.innerText = value.name;
         
         //HTML price generation
-        price.innerText = value.price
-        ;
+        price.innerText = value.price;
             
         //HTML description generation
         description.innerHTML = value.description;
@@ -73,6 +72,7 @@ const api = "http://localhost:3000/api/products/" + id;
 /************************************************** */
 /*              STOCKAGE OF PURCHASE                */
 /************************************************** */
+
 //Initialise storage purchase
 let purchase = {
     "id" : id,
@@ -80,10 +80,8 @@ let purchase = {
     "color" : '',
 };
 
-
 //Local storage for cart : Quantity
 quantity.addEventListener('input', (e) => purchase.quantity = e.target.value);
-
 
 //Locale storage for cart : Color
 colors.addEventListener('input', (e) => purchase.color = e.target.value);
@@ -97,6 +95,7 @@ colors.addEventListener('input', (e) => purchase.color = e.target.value);
 
 // When it have a click on AddToCart button, add product into a caddy and go to the cart's page
 addToCart.addEventListener('click', function() {
+    // Check if inputs was declared and take properties
     if (purchase.quantity >=1 && purchase.color != "") {
         let qty = parseInt(purchase.quantity, 10);
         let color = purchase.color;
@@ -104,9 +103,6 @@ addToCart.addEventListener('click', function() {
     } else {
         alert("Veuillez choisir la couleur et la quantité de canapé désiré");
     }
-
-
-
-    // document.location.href = url.origin +  "/front/html/cart.html";
+    document.location.href = url.origin +  "/front/html/cart.html";
     }
 );

@@ -1,5 +1,8 @@
+///////////////////////////////////////////////////////// CADDY
+
+
 //API link with product's id
-const api = 'http://localhost:3000/api/products/' + id;
+const api = 'http://localhost:3000/api/products/';
 
 //Initialization of Basket
 let arrayBasket ={

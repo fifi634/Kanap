@@ -1,5 +1,15 @@
+/******************/ 
+/*  Product Page  */
+/******************/
+
+
+
+//Initialization of URL object with brother's url
+let url = new URL(document.location.href);
+
+
 //Recovery of id from url
-let id = new URL(document.location.href).searchParams.get("id");
+let id = url.searchParams.get("id");
 
 
 //API link with product's id
@@ -20,15 +30,15 @@ const api = 'http://localhost:3000/api/products/' + id;
 
  //Check API's connection and return result if it's ok
  .then ((res) => {
-    if (res.ok) {
-        return res.json();
-    }
+     if (res.ok) {
+         return res.json();
+     }
  })
 
  //Work on reception's value
  .then((value) => {
 
-    //Check if it's a good id product
+    //Check if it's a good product id
     if (id === value._id) {
         
         //HTML picture generation

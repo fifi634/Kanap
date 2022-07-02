@@ -1,20 +1,23 @@
 ///////////////////////////////////////// JS FUNCTION
 
 
-/**
- * Getting or create caddy from local storage
- * @returns {array} caddy : array of product purchase
- */
-function getCaddy() {
-    let items = [];
 
-    // If a caddy exist in local storage, return it
-    if (localStorage.getItem("caddy") != null) {
-        items = JSON.parse(localStorage.getItem("caddy"));
+
+/**
+ * Getting or create cart from local storage
+ * @returns {array} cart : array of product purchase
+ */
+function getCart() {
+    let kanap = [];
+
+    // If a cart exist in local storage, return it
+    if (localStorage.getItem("cart") != null) {
+        kanap = JSON.parse(localStorage.getItem("cart"));
     }
-    console.log('get caddy');
-    return items;
+    return kanap;
 }
+
+
 
 
 /**
@@ -24,32 +27,60 @@ function getCaddy() {
  * @param {int} qty - quantity of product purchase
  * @return {string} save caddy in localStorage
  */
-function add2Caddy (productID, color, qty) {
-    let caddy = getCaddy();
+function add2Cart (productID, color, qty) {
+    let cart = getCart();
     
-    //If caddy is empty, add the first product in
-    if (caddy.length == 0) {
-        caddy = [[productID, color, qty]];
+    //If cart is empty, add the first product in
+    if (cart.length == 0) {
+        cart = [[productID, color, qty]];
     } else {
         let found = false;
 
-        //If caddy exist in locale storage, for each article of this caddy
-        for (let item of caddy) {
+        //If cart exist in locale storage, for each article of this cart
+        for (let kanap of cart) {
             //If this product had a same color and id, add quantity
-            if (productID === item[0] && color === item[1]) {
+            if (productID === kanap[0] && color === kanap[1]) {
                 found = true;
-                item[2] += qty;
+                kanap[2] += qty;
             } 
         }
 
-        // If the product wasn't in caddy, add it
+        // If the product wasn't in cart, add it
         if (found == false) {
-            let item = [productID, color, qty];
-            caddy.push(item);
+            let kanap = [productID, color, qty];
+            cart.push(kanap);
         }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        window.location.reload();
     }
     
-    // store caddy in locale storage
-    localStorage.setItem("caddy", JSON.stringify(caddy));
+    // store cart in locale storage
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+
+
+
+// Total price
+function totalPrice (price, quantity) {
+    let total =+ price * quantity;
+    document
+        .querySelector('#totalPrice')
+        .innerHTML = total;
+}
+
+
+
+
+//Change quantity on Cart's page
+function changeQuantity (id, color, qty) {
+    let cart = getCart();
+    // Parse cart for change quantity when it found
+    for (let kanap of cart) {
+        if (kanap[0] == id && kanap[1] == color) {
+            kanap[2] = qty;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        window.location.reload();
+    }
+}

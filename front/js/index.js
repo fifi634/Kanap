@@ -2,7 +2,7 @@
 
 
 // API Product link
-const api = "http://localhost:3000/api/products/"
+const api = "http://localhost:3000/api/products/";
 
 
 /**

@@ -1,15 +1,7 @@
-/******************/ 
-/*   Home Page    */
-/******************/
+/****************************************/ 
+/*              Home Page               */
+/****************************************/
 
-
-/**
- * Recovery cart from local storage
- * @returns {string | array} - If cart exist return empty array else return existing cart from local storage in array format
- */
-function getCart() {
-    //Recovery of cart
-    let cart = localStorage.getItem('cart');
 
 //API link
 const api = 'http://localhost:3000/api/products';
@@ -19,7 +11,7 @@ const api = 'http://localhost:3000/api/products';
  * Connection with API with GET for reception
  * @param {string} api - url of api declared in "const api"
  * @returns {Promise.resolve<string>} - array of product and detail product
- * @returns {Promise.reject<Error>} - knex Err or BadRequestError
+ * @returns {Promise.reject<Error>} - connection Error or bad request error
  */
 fetch(api)
 
@@ -35,17 +27,17 @@ fetch(api)
 
         // Display product on home page
         for (let kanap of value) {
-
             //HTML generation
-            document
-                .getElementById('items')
-                .innerHTML = `<a href="">
-                                <article>
-                                    <img src="" alt="">
-                                    <h3 class="productName"></h3>
-                                    <p class="productDescription"></p>
-                                </article>
-                            </a>`+ document.getElementById('items').innerHTML;                   
+            items.innerHTML = 
+                `<a href="">
+                    <article>
+                        <img src="" alt="">
+                        <h3 class="productName"></h3>
+                        <p class="productDescription"></p>
+                    </article>
+                </a>`
+                + items.innerHTML
+            ;                   
 
             //Link generation
             document
@@ -74,9 +66,7 @@ fetch(api)
 
     // If error, display it on console and display a message on home page
     .catch((err) => {
-        console.log(err);
-        document
-            .getElementById('items')        
-            .innerText = "La connection avec l'API à échoué :( "
+        console.log('fetch error :') + console.log(err);
+        items.innerText = "La connection avec l'API à échoué :( "
     })
 ;

@@ -1,19 +1,17 @@
-/******************/ 
-/*  Product Page  */
-/******************/
+                        /****************************************/ 
+                        /*              PRODUCT PAGE            */
+                        /****************************************/
 
 
+// URL location
+const url = new URL(location);
 
-//Initialization of URL object with brother's url
-let url = new URL(document.location.href);
+// Product ID
+const id = url.searchParams.get("id");
 
+// API Product link
+const api = "http://localhost:3000/api/products/" + id;
 
-//Recovery of id from url
-let id = url.searchParams.get("id");
-
-
-//API link with product's id
-const api = 'http://localhost:3000/api/products/' + id;
 
 
 /******************************************************* */
@@ -24,7 +22,7 @@ const api = 'http://localhost:3000/api/products/' + id;
  * Connection with API with GET for reception
  * @param {string} api - url of api declared in "const api"
  * @returns {Promise.resolve<string>} - array of product and detail product
- * @returns {Promise.reject<Error>} - knex Err or BadRequestError
+ * @returns {Promise.reject<Error>} - connection or bad request error
  */
  fetch(api)
 
@@ -48,28 +46,18 @@ const api = 'http://localhost:3000/api/products/' + id;
         ;
 
         //HTML product's title generation
-        document
-            .querySelector("#title")
-            .innerText = value.name
-        ;
+        title.innerText = value.name;
         
         //HTML price generation
-        document
-            .querySelector("#price")
-            .innerText = value.price
+        price.innerText = value.price
         ;
             
         //HTML description generation
-        document
-            .querySelector("#description")
-            .innerHTML = value.description
-        ;
+        description.innerHTML = value.description;
         
         //HTML color's choice generation
         for (let color of value.colors) {
-            document
-                .querySelector("#colors")
-                .innerHTML = `<option value="${color}">${color}</option>`
+            colors.innerHTML = `<option value="${color}">${color}</option>`
                 + document.querySelector("#colors").innerHTML
             ;
         }
@@ -84,43 +72,43 @@ const api = 'http://localhost:3000/api/products/' + id;
 ;
 
 
-/************************************************************ */
-/*               STOCKAGE OF PURCHASE                             */
-/************************************************************ */
-//Initialise storage purchase
-let purchase = {
-    "id" : id,
-    "quantity" : '',
-    "color" : '',
-};
+// /************************************************************ */
+// /*               STOCKAGE OF PURCHASE                             */
+// /************************************************************ */
+// //Initialise storage purchase
+// let purchase = {
+//     "id" : id,
+//     "quantity" : '',
+//     "color" : '',
+// };
 
 
-//Local storage for cart : Quantity
-document
-    .querySelector('#quantity')
-    .addEventListener('input', (e) => purchase.quantity = e.target.value)
-;
+// //Local storage for cart : Quantity
+// document
+//     .querySelector('#quantity')
+//     .addEventListener('input', (e) => purchase.quantity = e.target.value)
+// ;
 
 
-//Locale storage for basket : Id product
-localStorage.id = id;
+// //Locale storage for basket : Id product
+// localStorage.id = id;
 
 
-//Locale storage for cart : Color
-document
-    .querySelector('#colors')
-    .addEventListener('input', (e) => purchase.color = e.target.value)
-;
-console.log(localStorage);
+// //Locale storage for cart : Color
+// document
+//     .querySelector('#colors')
+//     .addEventListener('input', (e) => purchase.color = e.target.value)
+// ;
+// console.log(localStorage);
 
 
-/************************************************************* */
-/*                     ADD CART BUTTON                         */
-/************************************************************* */
+// /************************************************************* */
+// /*                     ADD CART BUTTON                         */
+// /************************************************************* */
 
 
-// When it have a click on a button, go to cart's page
-document
-    .querySelector('#addToCart')
-    .addEventListener('click', (e) => document.location.href = "http://127.0.0.1:5500/front/html/cart.html")
-;
+// // When it have a click on a button, go to cart's page
+// document
+//     .querySelector('#addToCart')
+//     .addEventListener('click', (e) => document.location.href = "http://127.0.0.1:5500/front/html/cart.html")
+// ;

@@ -97,9 +97,14 @@ colors.addEventListener('input', (e) => purchase.color = e.target.value);
 
 // When it have a click on AddToCart button, add product into a caddy and go to the cart's page
 addToCart.addEventListener('click', function() {
-    let qty = parseInt(purchase.quantity, 10);
-    let color = purchase.color;
-    add2Caddy(id, color, qty);
+    if (purchase.quantity >=1 && purchase.color != "") {
+        let qty = parseInt(purchase.quantity, 10);
+        let color = purchase.color;
+        add2Caddy(id, color, qty);
+    } else {
+        alert("Veuillez choisir la couleur et la quantité de canapé désiré");
+    }
+
 
 
     // document.location.href = url.origin +  "/front/html/cart.html";

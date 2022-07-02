@@ -1,7 +1,5 @@
-                        /****************************************/ 
-                        /*              PRODUCT PAGE            */
-                        /****************************************/
-
+/////////////////////////////////////////////// PRODUCT PAGE
+                       
 
 // URL location
 const url = new URL(location);
@@ -72,43 +70,38 @@ const api = "http://localhost:3000/api/products/" + id;
 ;
 
 
-// /************************************************************ */
-// /*               STOCKAGE OF PURCHASE                             */
-// /************************************************************ */
-// //Initialise storage purchase
-// let purchase = {
-//     "id" : id,
-//     "quantity" : '',
-//     "color" : '',
-// };
+/************************************************** */
+/*              STOCKAGE OF PURCHASE                */
+/************************************************** */
+//Initialise storage purchase
+let purchase = {
+    "id" : id,
+    "quantity" : '',
+    "color" : '',
+};
 
 
-// //Local storage for cart : Quantity
-// document
-//     .querySelector('#quantity')
-//     .addEventListener('input', (e) => purchase.quantity = e.target.value)
-// ;
+//Local storage for cart : Quantity
+quantity.addEventListener('input', (e) => purchase.quantity = e.target.value);
 
 
-// //Locale storage for basket : Id product
-// localStorage.id = id;
+//Locale storage for cart : Color
+colors.addEventListener('input', (e) => purchase.color = e.target.value);
 
 
-// //Locale storage for cart : Color
-// document
-//     .querySelector('#colors')
-//     .addEventListener('input', (e) => purchase.color = e.target.value)
-// ;
-// console.log(localStorage);
+
+/************************************************************* */
+/*                     ADD CART BUTTON                         */
+/************************************************************* */
 
 
-// /************************************************************* */
-// /*                     ADD CART BUTTON                         */
-// /************************************************************* */
+// When it have a click on AddToCart button, add product into a caddy and go to the cart's page
+addToCart.addEventListener('click', function() {
+    let qty = parseInt(purchase.quantity, 10);
+    let color = purchase.color;
+    add2Caddy(id, color, qty);
 
 
-// // When it have a click on a button, go to cart's page
-// document
-//     .querySelector('#addToCart')
-//     .addEventListener('click', (e) => document.location.href = "http://127.0.0.1:5500/front/html/cart.html")
-// ;
+    // document.location.href = url.origin +  "/front/html/cart.html";
+    }
+);

@@ -1,10 +1,8 @@
-/****************************************/ 
-/*              Home Page               */
-/****************************************/
+/////////////////////////////////////////////////////////// HOME PAGE 
 
 
-//API link
-const api = 'http://localhost:3000/api/products';
+// API Product link
+const api = "http://localhost:3000/api/products/"
 
 
 /**

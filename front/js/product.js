@@ -16,12 +16,7 @@ const api = "http://localhost:3000/api/products/" + id;
 /*               DISPLAY DETAIL PRODUCT                  */
 /******************************************************* */
 
-/**
- * Connection with API with GET for reception
- * @param {string} api - url of api declared in "const api"
- * @returns {Promise.resolve<string>} - array of product and detail product
- * @returns {Promise.reject<Error>} - connection or bad request error
- */
+// Connection with API
  fetch(api)
 
  //Check API's connection and return result if it's ok
@@ -64,9 +59,9 @@ const api = "http://localhost:3000/api/products/" + id;
 // If error, display it on console and display a alert
 .catch((err) => {
     console.log(err);
-    alert("la connexion avec l\'API a échoué")
-})
-;
+    title.innerText = "L'API a rencontré une erreur."
+    description.innerText = "Plus d'info dans la console."
+});
 
 
 /************************************************** */

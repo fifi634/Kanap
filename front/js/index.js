@@ -65,6 +65,12 @@ fetch(api)
     // If error, display it on console and display a message on home page
     .catch((err) => {
         console.log('fetch error :') + console.log(err);
-        items.innerText = "La connection avec l'API à échoué :( "
+        document
+            .querySelector('h1')
+            .innerText = "L'API a rencontré une erreur"
+        ;
+        document
+            .querySelector('h2')
+            .innerText = "Plus d'info dans la console."
     })
 ;

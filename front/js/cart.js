@@ -19,6 +19,12 @@ let clientOrder = {
     "order": ''
 };
 
+
+/****************************************** */
+/*              DISPLAY CART                */
+/****************************************** */
+
+
 // If cart exist in local storage
 if (localStorage.getItem('cart') != null) {
     //for each product of cart
@@ -27,17 +33,10 @@ if (localStorage.getItem('cart') != null) {
         let kanapColor = kanap[1];
         let kanapQty = kanap[2];
 
-        /**
-        * Connection with API with GET for reception
-        * @param {string} api - url of api declared in "const api"
-        * @returns {Promise.resolve<string>} - array of product and detail product
-        * @returns {Promise.reject<Error>} - connection error or bad request error
-        */
+        // Connection with API
         fetch(api)
-
-        //Check API's connection and return result if it's ok
+        //Check API's connection
         .then ((response) => response.json())
-
         //Work on reception's value
         .then((value) => {
             // For each product of cart
@@ -58,32 +57,39 @@ if (localStorage.getItem('cart') != null) {
                                 <div class="cart__item__content__settings">
                                     <div class="cart__item__content__settings__quantity">
                                         <p>Qté : </p>
-                                        <input type="number" class="itemQuantity" name="itemQuantity" onchange="changeQuantity('${kanapId}', '${kanapColor}', ${kanapQty})" min="1" max="100" value="${kanapQty}">
+                                        <input type="number" class="itemQuantity" name="itemQuantity" onchange="changeQuantity('${kanapId}', '${kanapColor}', this.value)" min="1" max="100" value="${kanapQty}">
                                     </div>
                                     <div class="cart__item__content__settings__delete">
-                                        <p class="deleteItem">Supprimer</p>
+                                        <p class="deleteItem" onclick="deleteProduct('${kanapId}', '${kanapColor}')">Supprimer</p>
                                     </div>
                                 </div>
                             </div>
                         </article> `
                     ;
 
-                    // Calcule quantity * price 
-                    totalPrice(product.price, kanapQty);
+                    // Calculate total price and display it 
+                    price += parseInt(product.price, 10) * parseInt(kanapQty, 10);
+                    document
+                        .querySelector('#totalPrice')
+                        .innerText = price
+                    ;
                     
-                // Else, empty cart
+                // Else if empty cart, write it
                 } else {
-                    document.querySelector('h1').innerHTML = 'Votre panier est vide';
-                    // document.querySelector('.cart__order') = '';
-                    // document.querySelector('cart__price') = '';
+                    console.log('empty cart');
+                    document.getElementsByTagName('h1').innerText = "Votre panier est vide";
+                    document.querySelector('.cart__order') = '';
+                    document.querySelector('cart__price') = '';
                 }
-            } 
+            }
         })
 
         // If error, display it on console and display a alert
         .catch((err) => {
             console.log(err);
-            alert("la connexion avec l\'API a échoué")
+            document
+                .querySelector('#order')
+                .setAttribute('value', "L'API a rencontré une erreur, plus d'info dans la console.")
         });      
     }
 }

@@ -1,6 +1,13 @@
 ///////////////////////////////////////// JS FUNCTION
 
 
+
+
+/********************************** */
+/*              CART                */
+/********************************** */
+
+
 /**
  * Save cart in locale storage
  * 
@@ -17,9 +24,7 @@
     //Update cart from local storage
     console.log('cart updated');
     return cart = JSON.parse(localStorage.getItem('cart'));
-}
-
-
+};
 
 
 /**
@@ -34,28 +39,24 @@ function getCart() {
         kanap = JSON.parse(localStorage.getItem("cart"));
     }
     return kanap;
-}
-
-
+};
 
 
 /**
- * Add product in caddy
+ * Add product in cart
  * 
  * @param {string} productID - product id purchase
  * @param {string} color - color of product purchase
  * @param {int} qty - quantity of product purchase
- * @return {string} save caddy in localStorage
+ * @return {string} save cart in localStorage
  */
 function add2Cart (productID, color, qty) {
     let cart = getCart();
-    
     //If cart is empty, add the first product in
     if (cart.length == 0) {
         cart = [[productID, color, qty]];
     } else {
         let found = false;
-
         //If cart exist in locale storage, for each article of this cart
         for (let kanap of cart) {
             //If this product had a same color and id, add quantity
@@ -64,19 +65,15 @@ function add2Cart (productID, color, qty) {
                 kanap[2] += qty;
             } 
         }
-
         // If the product wasn't in cart, add it
         if (found == false) {
             let kanap = [productID, color, qty];
             cart.push(kanap);
         }
     }
-    
     // Save cart in local storage
     saveCart(cart);
-}
-
-
+};
 
 
 /**
@@ -97,13 +94,9 @@ function changeQuantity (id, color, qty) {
         saveCart(cart);
         window.location.reload();
     }
-    
-}
+};
 
 
-
-
-//
 /**
  * Delete product
  * 
@@ -124,3 +117,57 @@ function deleteProduct(id, color) {
     window.location.reload();
     return cart;
 }
+
+
+
+
+/********************************************** */
+/*              CHECK USER'S DATA               */
+/********************************************** */
+
+function check (data, type) {
+    // RegEx setting
+    let mask = '';
+    const word = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]{1,31}$/g;
+    const address = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ,\s-]{1,200}$/g;
+    const email = /^[a-zA-Z-]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/g;
+
+    this.type = type;
+    this.data = data;
+
+    if (type === 'word') {mask = word};
+    if (type === 'email') {mask = email};
+    if (type === 'address') {mask = address};
+
+    return mask.test(data);
+};
+
+
+
+
+
+
+// // Word
+// function checkWord (word) {
+//         let mask = /^[a-z][a-z '-.,]{1,31}$|^$/i;
+//     if (word.match(mask) = null ) {
+//         console.log(word.match(mask))
+//         return true;
+//     } else {
+//         return word.match(mask).toString();
+//     }
+// };
+
+
+// // Email
+// function checkEmail (word) {
+//     let mask = /^[a-zA-Z-]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/g;
+//     if (word.match(mask) != null ) {
+//         console.log(word.match(mask))
+//         return true;
+//     } else {
+//         return word.match(mask).toString();
+//     }
+// };
+
+

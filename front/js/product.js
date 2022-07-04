@@ -95,8 +95,8 @@ addToCart.addEventListener('click', function() {
         let qty = parseInt(purchase.quantity, 10);
         let color = purchase.color;
         add2Cart(id, color, qty);
+        window.location.href = url.origin +  "/front/html/cart.html";
     } else {
         alert("Veuillez choisir la couleur et la quantité de canapé désiré");
     }
-    window.location.href = url.origin +  "/front/html/cart.html";
 });

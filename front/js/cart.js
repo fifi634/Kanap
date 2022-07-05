@@ -126,81 +126,62 @@ city.addEventListener('change', (e) => client.city = e.target.value.toString());
 email.addEventListener('change', (e) => client.email = e.target.value.toString());
 
 
-/****************************************** */
-/*              CHECK USER DATA             */
-/****************************************** */
 
 
-//First name
-let  firstNameVerif = function () {
-    if (check(client.firstName, 'word') == true) {
-        return true;
+
+/********************************************* */
+/*              BUTTON : COMMANDER             */
+/********************************************* */
+
+order.addEventListener('click', (e) => {
+    //unset default reaction button
+    e.preventDefault();
+
+    //reset error message
+    firstNameErrorMsg.innerText = "";
+    lastNameErrorMsg.innerText = "";
+    addressErrorMsg.innerText = "";
+    cityErrorMsg.innerText = "";
+    emailErrorMsg.innerText = "";
+
+
+    //Check if all data user is goood, and wait user modif
+    let firstNameVerif = check(client.firstName, 'word');
+    let lastNameVerif = check(client.lastName, 'word');
+    let addressVerif = check(client.address, 'address');
+    let cityVerif = check(client.city, 'address');
+    let emailVerif = check(client.email, 'email');
+
+    if( firstNameVerif === false ||
+        lastNameVerif === false ||
+        addressVerif === false ||
+        cityVerif === false ||
+        emailVerif === false) 
+    {
+        if (firstNameVerif == false) {
+            firstNameErrorMsg.innerText = `Veuillez entrer un prenom, les chiffres et caractères spéciaux ne sont pas acceptés`;
+        }
+
+        if (lastNameVerif == false) {
+            lastNameErrorMsg.innerText = `Veuillez entrer un nom, les chiffres et caractères spéciaux ne sont pas acceptés`;
+        }
+
+        if (addressVerif == false) {
+            addressErrorMsg.innerText = `Veuillez entrer une adresse, les caractères spéciaux ne sont pas acceptés.`;
+        }
+
+        if (cityVerif == false) {
+            cityErrorMsg.innerText = `Veuillez entrer une ville, les caractères spéciaux ne sont pas acceptés.`;
+        }
+
+        if (emailVerif == false) {
+            emailErrorMsg.innerText = `Veuillez entrer une adresse email au format xxxxxxxx@xxxxxx.xxxxx.`;
+        }
+        return
     } else {
-        firstNameErrorMsg.innerText = `Les chiffres et caractères spéciaux ne sont pas acceptés`;
-        return false;
-    }
-};
-
-//Last name
-let  lastNameVerif = function () {
-    if (check(client.lastName, 'word') == true) {
-        return true;
-        } else {
-            lastNameErrorMsg.innerText = `Les chiffres et caractères spéciaux ne sont pas acceptés`;
-            return false;
-        }
-    }
-;
-
-
-//Address
-let  addressVerif = function () {
-    if (check(client.address, 'address') == true) {
-        return true;
-        } else {
-            addressErrorMsg.innerText = `Les caractères spéciaux ne sont pas acceptés.`;
-            return false;
-        }
-    }
-;
-
-
-//City
-let  cityVerif = function () {
-    if (check(client.city, 'address') == true) {
-        return true;
-        } else {
-            cityErrorMsg.innerText = `Les caractères spéciaux ne sont pas acceptés.`;
-            return false;
-        }
-    }
-;
-
-
-
-//E-mail
-let  eMailVerif = function () {
-    if (check(client.email, 'email') == true) {
-        return true;
-        } else {
-            emailErrorMsg.innerText = `Ce que vous avez entré ne respecte pas le format e-mail`;
-            return false;
-        }
-    }
-;
-
-
-/********************************************** */
-/*              BUTTON : COMMANDER"             */
-/********************************************** */
-
-order.addEventListener('click', () => {
-    if( firstNameVerif() === true &&
-        lastNameVerif() === true &&
-        addressVerif() === true &&
-        cityVerif() === true &&
-        eMailVerif() === true) 
-        {
-
-        }
+        console.log('ok');
+    };
 });
+
+
+    

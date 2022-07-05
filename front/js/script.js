@@ -125,12 +125,18 @@ function deleteProduct(id, color) {
 /*              CHECK USER'S DATA               */
 /********************************************** */
 
+/**
+ * Check order information user
+ * @param {string} data - element to check
+ * @param {any} type - type of check (email, address or word)
+ * @returns {boolean} - true if element was ok, false is wasn't ok
+ */
 function check (data, type) {
     // RegEx setting
     let mask = '';
-    const word = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]{1,31}$/g;
-    const address = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ,\s-]{1,200}$/g;
-    const email = /^[a-zA-Z-]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/g;
+    const word = /[A-Za-zÀ-ÖØ-öø-ÿ-]{2,31}/g;
+    const address = /[A-Za-zÀ-ÖØ-öø-ÿ-0-9]{3,200}/g;
+    const email = /([\w-\.]+@[\w-\.]+\.{1}[\w]+)/g;
 
     this.type = type;
     this.data = data;
@@ -141,33 +147,5 @@ function check (data, type) {
 
     return mask.test(data);
 };
-
-
-
-
-
-
-// // Word
-// function checkWord (word) {
-//         let mask = /^[a-z][a-z '-.,]{1,31}$|^$/i;
-//     if (word.match(mask) = null ) {
-//         console.log(word.match(mask))
-//         return true;
-//     } else {
-//         return word.match(mask).toString();
-//     }
-// };
-
-
-// // Email
-// function checkEmail (word) {
-//     let mask = /^[a-zA-Z-]+@[a-zA-Z-]+\.[a-zA-Z]{2,6}$/g;
-//     if (word.match(mask) != null ) {
-//         console.log(word.match(mask))
-//         return true;
-//     } else {
-//         return word.match(mask).toString();
-//     }
-// };
 
 

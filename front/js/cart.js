@@ -1,13 +1,18 @@
 ///////////////////////////////////////////////////////// CART
 
 
-// Get cart from local storage and initialize detail's product
+//Initialization of order
 let cart = getCart();
+
+// For calulate family product
 let qty = 0;
 let price = 0;
 
 //API link
-const api = 'http://localhost:3000/api/products/';
+const get = 'http://localhost:3000/api/products/';
+const post = 'http://localhost:3000/api/products/order/';
+
+
 
 
 /****************************************** */
@@ -23,18 +28,23 @@ if (cart != null && cart.length != [] ) {
         let kanapColor = kanap[1];
         let kanapQty = kanap[2];
 
-        // Connection with API
-        fetch(api)
+        // Connection with API for reception
+        fetch(get)
+
             //Check API's connection
             .then ((response) => response.json())
+
             //Work on reception's value
             .then((value) => {
+
                 // For each product of cart
                 for (let product of value) {
+
                     // If quantity product was 0, delete it
                     if (kanapId == product._id && kanapQty < 1) {
                         deleteProduct(kanapId, kanapColor)
                     }
+
                     // If article purchase was found in API data
                     if (kanapId == product._id) {
                         cart__items.innerHTML += 
@@ -74,17 +84,20 @@ if (cart != null && cart.length != [] ) {
             // If error, display it on console and display a alert
             .catch((err) => {
                 console.log(err);
+                document.querySelector('h1').innerText = "L'API rencontre une erreur, voir console.";
                 document
                     .querySelector('#order')
-                    .setAttribute('value', "L'API a rencontré une erreur, plus d'info dans la console.")
+                    .setAttribute('value', "L'API rencontre une erreur, voir console.")
+                ;
             })
         ;      
     }
-} else // Else if empty cart, write it
-{
-    console.log('empty cart');
+
+    // Else if empty cart, write it
+} else {
     document.querySelector('h1').innerText = "Votre panier est vide";
     document.querySelector('.cart__price').innerText = "";
+    
     // Button for return in store
     document.querySelector('.cart__order').innerHTML = 
         `<div class="cart__order__form__submit"> 
@@ -96,19 +109,20 @@ if (cart != null && cart.length != [] ) {
 }
 
 
+
+
 /******************************************** */
 /*              GET USER'S DATA               */
 /******************************************** */
 
 
-//Initialization of object client's data order
 let client = {
     "firstName" : '',
     "lastName": '',
     "address": '',
     "city":'',
     "email": '',
-};
+}
 
 // Listening first name
 firstName.addEventListener('change', (e) => client.firstName = e.target.value.toString());
@@ -133,9 +147,9 @@ email.addEventListener('change', (e) => client.email = e.target.value.toString()
 /*              BUTTON : COMMANDER             */
 /********************************************* */
 
+
 order.addEventListener('click', (e) => {
-    //unset default reaction button
-    e.preventDefault();
+    e.preventDefault(); // Unset default reaction button
 
     //reset error message
     firstNameErrorMsg.innerText = "";
@@ -144,14 +158,14 @@ order.addEventListener('click', (e) => {
     cityErrorMsg.innerText = "";
     emailErrorMsg.innerText = "";
 
-
-    //Check if all data user is goood, and wait user modif
+    //Check if all data user was good
     let firstNameVerif = check(client.firstName, 'word');
     let lastNameVerif = check(client.lastName, 'word');
     let addressVerif = check(client.address, 'address');
     let cityVerif = check(client.city, 'address');
     let emailVerif = check(client.email, 'email');
 
+    //If one check fail, show it and wait user modif
     if( firstNameVerif === false ||
         lastNameVerif === false ||
         addressVerif === false ||
@@ -161,7 +175,7 @@ order.addEventListener('click', (e) => {
         if (firstNameVerif == false) {
             firstNameErrorMsg.innerText = `Veuillez entrer un prenom, les chiffres et caractères spéciaux ne sont pas acceptés`;
         }
-
+        
         if (lastNameVerif == false) {
             lastNameErrorMsg.innerText = `Veuillez entrer un nom, les chiffres et caractères spéciaux ne sont pas acceptés`;
         }
@@ -175,11 +189,36 @@ order.addEventListener('click', (e) => {
         }
 
         if (emailVerif == false) {
-            emailErrorMsg.innerText = `Veuillez entrer une adresse email au format xxxxxxxx@xxxxxx.xxxxx.`;
+            emailErrorMsg.innerText = `Veuillez entrer une adresse email au format xxxxxxxx@xxxxxx.xxxxx sans accents`;
         }
         return
-    } else {
-        console.log('ok');
+
+        // Else all data is ok, compil data order
+    } else {        
+        let jsonOrder = makeJsonOrder(client);
+        
+        // Conection for send data order
+        fetch(post, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonOrder
+        })
+            .then ((response) => response.json())
+            .then ((data) => {
+
+                // Clean of local storage
+                localStorage.clear();
+
+                // Go to confirmation page with ID purchase recover from API
+                window.location.href = window.location.origin +  "/front/html/confirmation.html?id=" + data.orderId;
+            })
+            .catch ((e) => {
+                console.log(e);
+                alert("L'envoie de la commande à échoué :(");
+            })
+        ;
     };
 });
 

@@ -19,49 +19,50 @@ const api = "http://localhost:3000/api/products/" + id;
 // Connection with API
  fetch(api)
 
- //Check API's connection and return result if it's ok
- .then ((res) => {
-     if (res.ok) {
-         return res.json();
-     }
- })
-
- //Work on reception's value
- .then((value) => {
-
-    //Check if it's a good product id
-    if (id === value._id) {
-        
-        //HTML picture generation
-        document
-            .querySelector(".item__img")
-            .innerHTML = `<img src="${value.imageUrl}" alt="${value.altTxt}">`
-        ;
-
-        //HTML product's title generation
-        title.innerText = value.name;
-        
-        //HTML price generation
-        price.innerText = value.price;
-            
-        //HTML description generation
-        description.innerHTML = value.description;
-        
-        //HTML color's choice generation
-        for (let color of value.colors) {
-            colors.innerHTML = `<option value="${color}">${color}</option>`
-                + document.querySelector("#colors").innerHTML
-            ;
+    //Check API's connection and return result if it's ok
+    .then ((res) => {
+        if (res.ok) {
+            return res.json();
         }
-    };
- })
+    })
 
-// If error, display it on console and display a alert
-.catch((err) => {
-    console.log(err);
-    title.innerText = "L'API a rencontré une erreur."
-    description.innerText = "Plus d'info dans la console."
-});
+    //Work on reception's value
+    .then((value) => {
+
+        //Check if it's a good product id
+        if (id === value._id) {
+            
+            //HTML picture generation
+            document
+                .querySelector(".item__img")
+                .innerHTML = `<img src="${value.imageUrl}" alt="${value.altTxt}">`
+            ;
+
+            //HTML product's title generation
+            title.innerText = value.name;
+            
+            //HTML price generation
+            price.innerText = value.price;
+                
+            //HTML description generation
+            description.innerHTML = value.description;
+            
+            //HTML color's choice generation
+            for (let color of value.colors) {
+                colors.innerHTML = `<option value="${color}">${color}</option>`
+                    + document.querySelector("#colors").innerHTML
+                ;
+            }
+        };
+    })
+
+    // If error, display it on console and display a alert
+    .catch((err) => {
+        console.log(err);
+        title.innerText = "L'API a rencontré une erreur.";
+        description.innerText = "Plus d'info dans la console.";
+    })
+;
 
 
 /************************************************** */

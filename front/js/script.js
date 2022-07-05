@@ -1,6 +1,4 @@
-///////////////////////////////////////// JS FUNCTION
-
-
+///////////////////////////////////////////////////////////////////// GLOBAL FUNCTION
 
 
 /********************************** */
@@ -27,6 +25,8 @@
 };
 
 
+
+
 /**
  * Get or create cart from local storage
  * 
@@ -40,6 +40,8 @@ function getCart() {
     }
     return kanap;
 };
+
+
 
 
 /**
@@ -76,6 +78,8 @@ function add2Cart (productID, color, qty) {
 };
 
 
+
+
 /**
  * Change quantity for cart's page
  * 
@@ -95,6 +99,8 @@ function changeQuantity (id, color, qty) {
         window.location.reload();
     }
 };
+
+
 
 
 /**
@@ -122,11 +128,12 @@ function deleteProduct(id, color) {
 
 
 /********************************************** */
-/*              CHECK USER'S DATA               */
+/*              USER'S DATA ORDER               */
 /********************************************** */
 
+
 /**
- * Check order information user
+ * Check contact information
  * @param {string} data - element to check
  * @param {any} type - type of check (email, address or word)
  * @returns {boolean} - true if element was ok, false is wasn't ok
@@ -149,3 +156,20 @@ function check (data, type) {
 };
 
 
+
+
+// Make order object
+function makeJsonOrder(client) {
+    let contact = client;
+    let cart = getCart();
+    let products = [];
+
+    for (let item of cart) {
+        if (products.find((id) => id == item[0])) {
+            console.log('makeJsonOrder : existing in order object, abort');
+        } else {
+            products.push(item[0]);
+        }
+    };
+    return JSON.stringify({contact, products});
+};

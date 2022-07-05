@@ -1,18 +1,17 @@
-/////////////////////////////////////////////////////////// HOME PAGE 
+/////////////////////////////////////////////////////////////////// HOME PAGE 
 
 
 // API Product link
-const api = "http://localhost:3000/api/products/"
+const get = "http://localhost:3000/api/products/";
 
 
 /**
- * Connection with API with GET for reception
- * @param {string} api - url of api declared in "const api"
+ * Connection with API for reception
+ * @param {string} get - url connection
  * @returns {Promise.resolve<string>} - array of product and detail product
- * @returns {Promise.reject<Error>} - connection Error or bad request error
+ * @returns {Promise.reject<Error>} - connection error or bad request error
  */
-fetch(api)
-
+fetch(get)
     // check API connection and return result if it's ok
     .then ((res) => {
         if (res.ok) {
@@ -65,6 +64,12 @@ fetch(api)
     // If error, display it on console and display a message on home page
     .catch((err) => {
         console.log('fetch error :') + console.log(err);
-        items.innerText = "La connection avec l'API à échoué :( "
+        document
+            .querySelector('h1')
+            .innerText = "L'API a rencontré une erreur"
+        ;
+        document
+            .querySelector('h2')
+            .innerText = "Plus d'info dans la console"
     })
 ;

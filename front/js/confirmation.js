@@ -1,9 +1,12 @@
 //////////////////////////////////////////////// CONFIRMATION
 
-// Get id confirm purchase
+// Initialize location for get ID Confirm Purchase in url
 const url = new URL(window.location);
-const id = url.searchParams.get('id');
 
 
-// Display number of purchase
-orderId.innerText = `${id}`;
+// Display ID of purchase
+orderId.innerText = `${url.searchParams.get('id')}`;
+
+
+// Clean of local storage
+localStorage.clear();

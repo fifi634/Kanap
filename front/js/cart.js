@@ -84,10 +84,10 @@ if (cart != null && cart.length != [] ) {
             // If error, display it on console and display a alert
             .catch((err) => {
                 console.log(err);
-                document.querySelector('h1').innerText = "L'API rencontre une erreur, voir console.";
+                document.querySelector('h1').innerText = "L'API rencontre une erreur.";
                 document
                     .querySelector('#order')
-                    .setAttribute('value', "L'API rencontre une erreur, voir console.")
+                    .setAttribute('value', "L'API rencontre une erreur.")
                 ;
             })
         ;      
@@ -189,7 +189,7 @@ order.addEventListener('click', (e) => {
         }
 
         if (emailVerif == false) {
-            emailErrorMsg.innerText = `Veuillez entrer une adresse email au format xxxxxxxx@xxxxxx.xxxxx sans accents`;
+            emailErrorMsg.innerText = `Veuillez entrer une adresse email au format xxxxxxxx@xxxxxx.xx sans accents`;
         }
         return
 
@@ -207,10 +207,7 @@ order.addEventListener('click', (e) => {
         })
             .then ((response) => response.json())
             .then ((data) => {
-
-                // Clean of local storage
-                localStorage.clear();
-
+                
                 // Go to confirmation page with ID purchase recover from API
                 window.location.href = window.location.origin +  "/front/html/confirmation.html?id=" + data.orderId;
             })

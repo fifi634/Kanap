@@ -70,6 +70,6 @@ fetch(get)
         ;
         document
             .querySelector('h2')
-            .innerText = "Plus d'info dans la console"
+            .innerText = "";
     })
 ;

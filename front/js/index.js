@@ -8,7 +8,7 @@ const get = "http://localhost:3000/api/products/";
 /**
  * Connection with API for reception
  * @param {string} get - url connection
- * @returns {Promise.resolve<string>} - array of product and detail product
+ * @returns {Promise.resolve<array>} - array of product and detail product
  * @returns {Promise.reject<Error>} - connection error or bad request error
  */
 fetch(get)
@@ -63,7 +63,7 @@ fetch(get)
 
     // If error, display it on console and display a message on home page
     .catch((err) => {
-        console.log('fetch error :') + console.log(err);
+        console.log('fetch reception > ' + err);
         document
             .querySelector('h1')
             .innerText = "L'API a rencontré une erreur"

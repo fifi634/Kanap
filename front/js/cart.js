@@ -4,7 +4,7 @@
 //Initialization of order
 let cart = getCart();
 
-// For calulate family product
+// For calulate a totals
 let qty = 0;
 let price = 0;
 
@@ -69,7 +69,7 @@ if (cart != null && cart.length != [] ) {
                                     </div>
                                 </div>
                             </article> `
-                        ;
+                        ;                        
 
                         // Calculate total price and display it 
                         price += parseInt(product.price, 10) * parseInt(kanapQty, 10);
@@ -83,14 +83,18 @@ if (cart != null && cart.length != [] ) {
 
             // If error, display it on console and display a alert
             .catch((err) => {
-                console.log(err);
+                console.log('fetch reception > ' + err);
                 document.querySelector('h1').innerText = "L'API rencontre une erreur.";
                 document
                     .querySelector('#order')
                     .setAttribute('value', "L'API rencontre une erreur.")
                 ;
             })
-        ;      
+        ;    
+
+        //Calculate quantity total of purchase article
+        qty += parseInt(kanapQty, 10);
+        totalQuantity.innerText = qty;  
     }
 
     // Else if empty cart, write it
@@ -206,18 +210,14 @@ order.addEventListener('click', (e) => {
             body: jsonOrder
         })
             .then ((response) => response.json())
-            .then ((data) => {
-                
+            .then ((data) => {                
                 // Go to confirmation page with ID purchase recover from API
                 window.location.href = window.location.origin +  "/front/html/confirmation.html?id=" + data.orderId;
             })
             .catch ((e) => {
-                console.log(e);
+                console.log('fetch send > ' + e);
                 alert("L'envoie de la commande à échoué :(");
             })
         ;
     };
 });
-
-
-    

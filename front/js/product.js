@@ -58,7 +58,7 @@ const api = "http://localhost:3000/api/products/" + id;
 
     // If error, display it on console and display a alert
     .catch((err) => {
-        console.log(err);
+        console.log('fetch reception > ' + err);
         title.innerText = "L'API a rencontré une erreur.";
         description.innerText = "Plus d'info dans la console.";
     })

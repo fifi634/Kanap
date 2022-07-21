@@ -119,7 +119,7 @@ if (cart != null && cart.length != [] ) {
 /*              GET USER'S DATA               */
 /******************************************** */
 
-
+// Initialization of object for store contact information
 let client = {
     "firstName" : '',
     "lastName": '',
@@ -155,7 +155,7 @@ email.addEventListener('change', (e) => client.email = e.target.value.toString()
 order.addEventListener('click', (e) => {
     e.preventDefault(); // Unset default reaction button
 
-    //reset error message
+    //Reset error message
     firstNameErrorMsg.innerText = "";
     lastNameErrorMsg.innerText = "";
     addressErrorMsg.innerText = "";

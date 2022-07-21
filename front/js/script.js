@@ -113,12 +113,12 @@ function changeQuantity (id, color, qty) {
 function deleteProduct(id, color) {
     let cart = getCart();
     // For each product of cart
-    for (let product of cart) {
-        //if id == product.id, delete it
-        if (id == product[0] && color == product[1]) {
-            cart.splice(product, 1); // Possibility to make a trash, "splice" return a delete array
-        }            
-    }        
+    for (let i = 0; i < cart.length; i++) {
+        //if id === product.id, delete it
+        if (id === cart[i][0] && color === cart[i][1]) {
+            cart.splice(i, 1); // Possibility to make a trash, "splice" return a delete array
+        }
+    }
     saveCart(cart);
     window.location.reload();
     return cart;

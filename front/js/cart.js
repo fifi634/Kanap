@@ -105,7 +105,7 @@ if (cart != null && cart.length != [] ) {
     // Button for return in store
     document.querySelector('.cart__order').innerHTML = 
         `<div class="cart__order__form__submit"> 
-            <a href=http://${window.location.host}/front/html/>
+            <a href=./index.html>
                 <input type="button" value="Retourner au magasin ?"/>
             </a>
         </div>`
@@ -212,7 +212,7 @@ order.addEventListener('click', (e) => {
             .then ((response) => response.json())
             .then ((data) => {                
                 // Go to confirmation page with ID purchase recover from API
-                window.location.href = window.location.origin + "/front/html/confirmation.html?id=" + data.orderId;
+                window.location.href = "./confirmation.html?id=" + data.orderId;
             })
             .catch ((e) => {
                 console.log('fetch send > ' + e);

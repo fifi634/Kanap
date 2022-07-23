@@ -212,7 +212,7 @@ order.addEventListener('click', (e) => {
             .then ((response) => response.json())
             .then ((data) => {                
                 // Go to confirmation page with ID purchase recover from API
-                window.location.href = "/front/html/confirmation.html?id=" + data.orderId;
+                window.location.href = window.location.origin + "/front/html/confirmation.html?id=" + data.orderId;
             })
             .catch ((e) => {
                 console.log('fetch send > ' + e);
